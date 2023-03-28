@@ -19,7 +19,7 @@
 
 ## Constrains:
 
-* #### da das Fach Hardwarenahe Softwareentwicklung im Namen trägt, sollten wir vielleicht um schneller und kleiner zu sein einfache Arrays an Stelle von Array von Structs vewenden (?)  
+* #### Zeitintensivität
 
 # Programmstruktur für die Sitznachbar-Anwendung
 ## Hauptprogramm
