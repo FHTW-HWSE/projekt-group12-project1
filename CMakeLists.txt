@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.23)
-project(projekt_group12_project1)
+project(projekt_group12_project1 C CXX)  # Add both C and CXX here to specify the languages
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_C_STANDARD 99)  # Set the C standard
+set(CMAKE_CXX_STANDARD 14)  # Set the C++ standard
 
 add_executable(projekt_group12_project1
         catch2-testing.cpp

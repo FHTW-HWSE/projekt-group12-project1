@@ -4,6 +4,8 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch_all.hpp>
 #include "hello.h"
+#include <iostream>
+
 
 TEST_CASE("test assignSeat function") {
 struct Classroom *classroom = generateClassroom(3, 3);

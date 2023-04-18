@@ -1,12 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-// Definition of the classroom data structure
-struct Classroom {
-    int rows;
-    int cols;
-    int **seats;
-};
+#include "hello.h"
 
 // Function to generate the classroom with the specified rows and columns
 struct Classroom *generateClassroom(int rows, int cols) {
@@ -82,4 +76,11 @@ void getDirectNeighbors(struct Classroom *classroom, int id) {
             printf("[%d, %d]\n", row+1, col+1);
         }
     }
+}
+void freeClassroom(struct Classroom *classroom) {
+    for (int i = 0; i < classroom->rows; i++) {
+        free(classroom->seats[i]);
+    }
+    free(classroom->seats);
+    free(classroom);
 }
