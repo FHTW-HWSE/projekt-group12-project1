@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(projekt_group12_project1
         catch2-testing.cpp
-        hello.c)
+        hello.c hello.h)
 Include(FetchContent)
 
 FetchContent_Declare(
