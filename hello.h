@@ -18,6 +18,7 @@ struct Classroom *generateClassroom(int rows, int cols);
 void assignSeat(struct Classroom *classroom, int studentId, int row, int col);
 void getDirectNeighbors(struct Classroom *classroom, int studentId);
 void freeClassroom(struct Classroom *classroom);
+void getNeighbors(struct Classroom *classroom, int id);
 
 #ifdef __cplusplus
 }

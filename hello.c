@@ -84,3 +84,75 @@ void freeClassroom(struct Classroom *classroom) {
     free(classroom->seats);
     free(classroom);
 }
+// Function to get the direct and indirect neighbors of a student
+void getNeighbors(struct Classroom *classroom, int id) {
+    int row = -1;
+    int col = -1;
+    for (int i = 0; i < classroom->rows; i++) {
+        for (int j = 0; j < classroom->cols; j++) {
+            if (classroom->seats[i][j] == id) {
+                row = i;
+                col = j;
+                break;
+            }
+        }
+        if (row != -1 && col != -1) {
+            break;
+        }
+    }
+    if (row == -1 || col == -1) {
+        printf("Student with ID %d not found\n", id);
+        return;
+    }
+    printf("Direct and indirect neighbors of student with ID %d are:\n", id);
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            if (i == 0 && j == 0) {
+                continue; // skip the student themselves
+            }
+            int neighbor_row = row + i;
+            int neighbor_col = col + j;
+            if (neighbor_row < 0 || neighbor_row >= classroom->rows ||
+                neighbor_col < 0 || neighbor_col >= classroom->cols) {
+                continue; // skip out of bounds seats
+            }
+            if (classroom->seats[neighbor_row][neighbor_col] != 0) {
+                printf("[%d, %d]\n", neighbor_row, neighbor_col);
+            }
+        }
+    }
+}
+
+//need a function to make a classroom with the specified rows and columns and print it out
+//need a function to assign a seat to a student with the specified ID and print it out
+//need a function to get the direct neighbors of a student and print it out
+
+//generate a classroom with rows and columns and print it out with user input
+int main() {
+    int rows, cols;
+    printf("Enter the number of rows: ");
+    scanf("%d", &rows);
+    printf("Enter the number of columns: ");
+    scanf("%d", &cols);
+    struct Classroom *classroom = generateClassroom(rows, cols);
+    printf("Classroom with %d rows and %d columns generated\n", rows, cols);
+    //assign a seat to a student with the specified ID and print it out with user input
+    int id, row, col;
+    printf("Enter the student ID: ");
+    scanf("%d", &id);
+    printf("Enter the row: ");
+    scanf("%d", &row);
+    printf("Enter the column: ");
+    scanf("%d", &col);
+    assignSeat(classroom, id, row, col);
+    //get the direct neighbors of a student and print it out with user input
+    printf("Enter the student ID: ");
+    scanf("%d", &id);
+    getDirectNeighbors(classroom, id);
+    //get the direct and indirect neighbors of a student and print it out with user input
+    printf("Enter the student ID: ");
+    scanf("%d", &id);
+    getNeighbors(classroom, id);
+    freeClassroom(classroom);
+    return 0;
+}
