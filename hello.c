@@ -137,13 +137,17 @@ int main() {
     struct Classroom *classroom = generateClassroom(rows, cols);
     printf("Classroom with %d rows and %d columns generated\n", rows, cols);
     //assign a seat to a student with the specified ID and print it out with user input
-    int id, row, col;
+    int id=0, row=0, col=0;
     printf("Enter the student ID: ");
     scanf("%d", &id);
     printf("Enter the row: ");
     scanf("%d", &row);
     printf("Enter the column: ");
     scanf("%d", &col);
+    if(row >= rows || col >= cols || row < 0 || col < 0) {
+        printf("Invalid seat\n");
+        return 0;
+    }
     assignSeat(classroom, id, row, col);
     //get the direct neighbors of a student and print it out with user input
     printf("Enter the student ID: ");
