@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)  # Set the C++ standard
 
 add_executable(projekt_group12_project1
 
-        hello.c hello.h)
+        main.c main.h functions.c functions.h)
 Include(FetchContent)
 
 FetchContent_Declare(

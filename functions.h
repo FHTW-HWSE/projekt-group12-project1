@@ -1,12 +1,12 @@
-// Created by Emad on 18/04/2023.
+//
+// Created by matze on 4/25/2023.
 //
 
-#ifndef PROJEKT_GROUP12_PROJECT1_HELLO_H
-#define PROJEKT_GROUP12_PROJECT1_HELLO_H
+#ifndef PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
+#define PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <stdio.h>
+#include <stdlib.h>
 
 struct Classroom {
     int rows;
@@ -20,8 +20,4 @@ void getDirectNeighbors(struct Classroom *classroom, int studentId);
 void freeClassroom(struct Classroom *classroom);
 void getNeighbors(struct Classroom *classroom, int id);
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif //PROJEKT_GROUP12_PROJECT1_HELLO_H
+#endif //PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
