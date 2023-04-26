@@ -4,20 +4,21 @@
 
 #ifndef PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
 #define PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
+#define MAX_ID_LENGTH
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <ctype.h>
 
-struct Classroom {
-    int rows;
-    int cols;
-    int **seats;
+struct seat {
+    bool infected;
+    bool directNeighbour;
+    bool indirectNeighbour;
+    char ID[MAX_ID_LENGTH];
 };
 
-struct Classroom *generateClassroom(int rows, int cols);
-void assignSeat(struct Classroom *classroom, int studentId, int row, int col);
-void getDirectNeighbors(struct Classroom *classroom, int studentId);
-void freeClassroom(struct Classroom *classroom);
-void getNeighbors(struct Classroom *classroom, int id);
+struct seat **generateClassroom(int rows, int cols);
+
 
 #endif //PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
