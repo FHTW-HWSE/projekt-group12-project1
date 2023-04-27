@@ -22,7 +22,7 @@ struct seat {
 };
 
 struct seat **generateClassroom(int rows, int cols);
-void saveRoom_toCSV(struct seat **classroom, FILE *csv_path);
+void saveRoom_toCSV(struct seat **classroom, char *csv_path);
 
 void menu_1(int *rows, int *cols, struct seat **classroom, char roomname[10]); // Generate Room
 void menu_2(FILE *roomfile, char roompath[250], struct seat **classroom); // Load Room
