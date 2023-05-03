@@ -9,32 +9,31 @@
 //generate a classroom with rows and columns and print it out with user input
 
 
-int main() {
+int main(int argc, char *argv[]) {
     int rows, cols;
-    printf("Please select what you want to do:\n  1) Generate a Room\n  2) Add Students to the Room \n  3)  ")
-    printf("Enter the number of rows: ");
-    scanf("%d", &rows);
-    printf("Enter the number of columns: ");
-    scanf("%d", &cols);
-    struct Classroom *classroom = generateClassroom(rows, cols);
-    printf("Classroom with %d rows and %d columns generated\n", rows, cols);
-    //assign a seat to a student with the specified ID and print it out with user input
-    int id, row, col;
-    printf("Enter the student ID: ");
-    scanf("%d", &id);
-    printf("Enter the row: ");
-    scanf("%d", &row);
-    printf("Enter the column: ");
-    scanf("%d", &col);
-    assignSeat(classroom, id, row, col);
-    //get the direct neighbors of a student and print it out with user input
-    printf("Enter the student ID: ");
-    scanf("%d", &id);
-    getDirectNeighbors(classroom, id);
-    //get the direct and indirect neighbors of a student and print it out with user input
-    printf("Enter the student ID: ");
-    scanf("%d", &id);
-    getNeighbors(classroom, id);
-    freeClassroom(classroom);
-    return 0;
+    int input = 0, exit = 0;
+    char roomname[10];
+    char roompath[250];
+    FILE *roomfile;
+    struct seat **classroom = NULL;
+    setbuf(stdout, NULL);
+
+
+    while (exit != 1) {
+        printf("Please select what you want to do by entering the menu points digit:\n  1) Generate a Room\n  2) Load a room\n  3) Save Room to file\n  4) Add Students to a Room \n  5) Mark a Student as Infected\n  6) Get direct neighbours for a Room\n  7) Get indirect neigbours for a room  ");
+        input = fgetc(stdin) - 48;
+        if (input > 0 && input < 10) {
+            switch (input) {
+                case 1:
+                    menu_1generateRoom(&rows, &cols, classroom, roomname, argv);
+                    break;
+                case 2:
+                    menu_2saveRoom(roomfile, roompath, classroom, argv);
+                    break;
+                default:
+                    printf("No really just why default");
+            }
+        }
+        return 0;
+    }
 }
