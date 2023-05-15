@@ -39,6 +39,12 @@ int main(int argc, char *argv[]) {
                 case 5:
                     markStudentAsInfected(classroom, rows, cols);
                     break;
+                case 6:
+                    getDirectNeighbours(classroom, rows, cols);
+                    break;
+                case 7:
+                    getIndirectNeighbours(classroom, rows, cols);
+                    break;
 
 
                 default:

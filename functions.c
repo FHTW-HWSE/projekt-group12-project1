@@ -39,6 +39,88 @@ void markStudentAsInfected(struct seat **classroom, int rows, int cols) {
     classroom[row][col].infected = 1;
 }
 
+// Function to get the direct neighbours of a student
+void getDirectNeighbours(struct seat **classroom, int rows, int cols) {
+    int row, col;
+    printf("Enter the seat coordinates to get the direct neighbours (row col): ");
+    scanf("%d %d", &row, &col);
+    // Check if the seat is occupied
+    if (classroom[row][col].ID[0] == '\0') {
+        printf("The seat is not occupied.\n");
+        return;
+    }
+    // Check if the seat coordinates are valid
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+        printf("Invalid seat coordinates.\n");
+        return;
+    }
+    // Check if the student is infected
+    if (classroom[row][col].infected == -1) {
+        printf("The student is not infected.\n");
+        return;
+    }
+    // Check if the student has direct neighbours
+    if (classroom[row][col].directNeighbour == -1) {
+        printf("The student has no direct neighbours.\n");
+        return;
+    }
+    // Print the direct neighbours
+    printf("The direct neighbours of the student are:\n");
+    if (row > 0 && classroom[row - 1][col].ID[0] != '\0') {
+        printf("  %s\n", classroom[row - 1][col].ID);
+    }
+    if (row < rows - 1 && classroom[row + 1][col].ID[0] != '\0') {
+        printf("  %s\n", classroom[row + 1][col].ID);
+    }
+    if (col > 0 && classroom[row][col - 1].ID[0] != '\0') {
+        printf("  %s\n", classroom[row][col - 1].ID);
+    }
+    if (col < cols - 1 && classroom[row][col + 1].ID[0] != '\0') {
+        printf("  %s\n", classroom[row][col + 1].ID);
+    }
+}
+
+//get indirect neighbours
+void getIndirectNeighbours(struct seat **classroom, int rows, int cols) {
+    int row, col;
+    printf("Enter the seat coordinates to get the indirect neighbours (row col): ");
+    scanf("%d %d", &row, &col);
+    // Check if the seat is occupied
+    if (classroom[row][col].ID[0] == '\0') {
+        printf("The seat is not occupied.\n");
+        return;
+    }
+    // Check if the seat coordinates are valid
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+        printf("Invalid seat coordinates.\n");
+        return;
+    }
+    // Check if the student is infected
+    if (classroom[row][col].infected == -1) {
+        printf("The student is not infected.\n");
+        return;
+    }
+    // Check if the student has indirect neighbours
+    if (classroom[row][col].indirectNeighbour == -1) {
+        printf("The student has no indirect neighbours.\n");
+        return;
+    }
+    // Print the indirect neighbours
+    printf("The indirect neighbours of the student are:\n");
+    if (row > 0 && col > 0 && classroom[row - 1][col - 1].ID[0] != '\0') {
+        printf("  %s\n", classroom[row - 1][col - 1].ID);
+    }
+    if (row > 0 && col < cols - 1 && classroom[row - 1][col + 1].ID[0] != '\0') {
+        printf("  %s\n", classroom[row - 1][col + 1].ID);
+    }
+    if (row < rows - 1 && col > 0 && classroom[row + 1][col - 1].ID[0] != '\0') {
+        printf("  %s\n", classroom[row + 1][col - 1].ID);
+    }
+    if (row < rows - 1 && col < cols - 1 && classroom[row + 1][col + 1].ID[0] != '\0') {
+        printf("  %s\n", classroom[row + 1][col + 1].ID);
+    }
+}
+
 
 
 

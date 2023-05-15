@@ -42,6 +42,11 @@ void addStudentsToRoom(struct seat **classroom, int rows, int cols);
 //mark student as infected
 void markStudentAsInfected(struct seat **classroom, int rows, int cols);
 
+//get direct neighbours of a room
+void getDirectNeighbours(struct seat **classroom, int rows, int cols);
+
+//get indirect neighbours of a room
+void getIndirectNeighbours(struct seat **classroom, int rows, int cols);
 
 
 #endif //PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
