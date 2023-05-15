@@ -36,6 +36,11 @@ void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom,
 
 char *get_Filepath(char *argv[]);
 
+//add student to room
+void addStudentsToRoom(struct seat **classroom, int rows, int cols);
+
+//mark student as infected
+void markStudentAsInfected(struct seat **classroom, int rows, int cols);
 
 
 

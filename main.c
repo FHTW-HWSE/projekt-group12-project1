@@ -30,6 +30,17 @@ int main(int argc, char *argv[]) {
                 case 2:
                     menu_2saveRoom(roomfile, roompath, classroom, argv);
                     break;
+                case 3:
+                    printf("No really just why default");
+                    break;
+                case 4:
+                    addStudentsToRoom(classroom, rows, cols);
+                    break;
+                case 5:
+                    markStudentAsInfected(classroom, rows, cols);
+                    break;
+
+
                 default:
                     printf("No really just why default");
             }

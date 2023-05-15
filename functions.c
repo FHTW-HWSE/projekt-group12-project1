@@ -4,6 +4,43 @@
 
 #include "functions.h"
 
+// Function to add a student to a room
+void addStudentsToRoom(struct seat **classroom, int rows, int cols) {
+    int row, col;
+    char ID[10];
+    printf("Please enter the ID of the student you want to add:");
+    fflush(stdin);
+    fgets(ID, 10, stdin);
+    printf("Please enter the row of the seat you want to add the student to:");
+    fflush(stdin);
+    row = fgetc(stdin) - 48;
+    printf("Please enter the column of the seat you want to add the student to:");
+    fflush(stdin);
+    col = fgetc(stdin) - 48;
+    strcpy(classroom[row][col].ID, ID);
+}
+
+// Function to mark a student as infected
+void markStudentAsInfected(struct seat **classroom, int rows, int cols) {
+    int row, col;
+    printf("Enter the seat coordinates to mark a student as infected (row col): ");
+    scanf("%d %d", &row, &col);
+    // Check if the seat is occupied
+    if (classroom[row][col].ID[0] == '\0') {
+        printf("The seat is not occupied.\n");
+        return;
+    }
+    // Check if the seat coordinates are valid
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+        printf("Invalid seat coordinates.\n");
+        return;
+    }
+    // Mark the student as infected
+    classroom[row][col].infected = 1;
+}
+
+
+
 
 // Function to generate the classroom with the specified rows and columns
 struct seat **generateClassroom(int rows, int cols, char *roomname) {
