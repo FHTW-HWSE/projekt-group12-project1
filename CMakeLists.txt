@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.0)
 project(projekt_group12_project1 C CXX)  # Add both C and CXX here to specify the languages
 
 set(CMAKE_C_STANDARD 99)  # Set the C standard
