@@ -28,8 +28,8 @@ struct seat {
 
 struct seat **generateClassroom(int rows, int cols, char *roomname);
 void base_menu(int input, int cols, int rows, struct seat **classroom, char roomname[10], char roompath[250], FILE *roomfile, char *argv[]);
-void saveRoom_toCSV(struct seat **classroom, char *csv_path);
-
+//void saveRoom_toCSV(struct seat **classroom, char *csv_path);
+void saveRoom_toCSV(struct seat **classroom, int rows, int cols);
 void menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[10], char *argv[]); // Generate Room
 void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom, char *argv[0]); // Load Room
 

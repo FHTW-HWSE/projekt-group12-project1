@@ -162,18 +162,24 @@ void base_menu(int input, int cols, int rows, struct seat **classroom, char room
     }
 }
 
-void
-menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[MAX_ROOMNAME_LENGTH], char *argv[]) {
-    printf("please enter the Name of your room:");
+void menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[MAX_ROOMNAME_LENGTH], char *argv[]) {
+    printf("Please enter the Name of your room:");
     fflush(stdin);
-    fgets(roomname, 10, stdin);
+    fgets(roomname, MAX_ROOMNAME_LENGTH, stdin);
+    fflush(stdin);
+    // Remove trailing newline character
+    if ((strlen(roomname) > 0) && (roomname[strlen (roomname) - 1] == '\n'))
+        roomname[strlen (roomname) - 1] = '\0';
+    fflush(stdin);
     printf("Please enter the number of your rows and hit enter:");
     fflush(stdin);
     *rows = fgetc(stdin)-48;
     printf("Please enter the number of your cols and hit enter:");
     fflush(stdin);
     *cols = fgetc(stdin)-48;
+    printf("You entered %d rows and %d cols", *rows, *cols);
     classroom = generateClassroom(*rows, *cols, roomname);
+    saveRoom_toCSV(classroom, *rows, *cols);
 }
 
 
@@ -186,7 +192,7 @@ void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom,
         char answer;
         if (toupper(answer = fgetc(stdin)) == 'Y') {
             char *filepath = get_Filepath(argv);
-            saveRoom_toCSV(classroom, filepath);
+            //saveRoom_toCSV(classroom, filepath);
         }
     } else {
         printf("You dont have a Room loaded -> generate one first, returning back to main menu");
@@ -215,27 +221,43 @@ char *get_Filepath(char *argv[]) {
     return filepath;
 }
 
-void saveRoom_toCSV(struct seat **classroom, char *csv_path) {
-    int rows = LEN(classroom)+1;
-    int cols = LEN(classroom[0])+1;
-    FILE *csv = fopen(csv_path, "w");
-    fprintf(csv, "%d,%d,", rows, cols);
-    for (int k = 2; k < cols; k++) {
-
-        fprintf(csv, ",");
+void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
+    if (classroom == NULL || classroom[0] == NULL) {
+        printf("Invalid classroom data.\n");
+        return;
     }
-    fprintf(csv, "\n");
+
+    // Assuming roomname is a null-terminated string in the struct seat
+    char *roomname = classroom[0][0].roomname;
+    char csv_path[MAX_ROOMNAME_LENGTH + 5]; // 4 for ".csv" extension and 1 for null-terminator
+
+    // Create the csv_path by appending ".csv" to the room name
+    snprintf(csv_path, sizeof(csv_path), "%s.csv", roomname);
+
+    FILE *csv = fopen(csv_path, "w");
+    if (csv == NULL) {
+        printf("Failed to open the file.\n");
+        return;
+    }
+
+    fprintf(csv, "%d,%d\n", rows, cols);
+
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (classroom[i][j].ID[0] != '\0') {    // check for empty seat!
-                fprintf(csv, "%s %d %d %d,", classroom[i][j].ID, classroom[i][j].infected,
+            if (j > 0) {
+                fprintf(csv, ",");
+            }
+            if (classroom[i][j].ID[0] != '\0') {
+                fprintf(csv, "%s %d %d %d", classroom[i][j].ID, classroom[i][j].infected,
                         classroom[i][j].directNeighbour, classroom[i][j].indirectNeighbour);
-            } else { fprintf(csv, ","); }
+            }
         }
         fprintf(csv, "\n");
     }
     fclose(csv);
 }
+
+
 
 void readRoom_fromCSV(struct seat **classroom, char *csv_path) {
     int rows = 0, cols = 0, i = 0, j = 0, k = 0;
