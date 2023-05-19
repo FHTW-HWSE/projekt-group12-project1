@@ -7,8 +7,9 @@
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
 #define MAX_ID_LENGTH
 #define MAX_CSV_LINE_LENGTH 1000
-#define MAX_ROOMNAME_LENGTH 20
+#define MAX_ROOMNAME_LENGTH 50
 #define MAX_FILEPATH_LENGTH 250
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,11 +32,11 @@ void base_menu(int input, int cols, int rows, struct seat **classroom, char room
 //void saveRoom_toCSV(struct seat **classroom, char *csv_path);
 void saveRoom_toCSV(struct seat **classroom, int rows, int cols);
 void menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[10], char *argv[]); // Generate Room
-void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom, char *argv[0]); // Load Room
+//void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom, char *argv[0]); // Load Room
+void loadRoom_fromCSV(struct seat ***classroom, int *rows, int *cols, char *csv_path);
 
 
-char *get_Filepath(char *argv[]);
-
+char* get_Filepath();
 //add student to room
 void addStudentsToRoom(struct seat **classroom, int rows, int cols);
 

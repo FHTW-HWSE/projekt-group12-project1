@@ -18,7 +18,6 @@ int main(int argc, char *argv[]) {
     struct seat **classroom = NULL;
     setbuf(stdout, NULL);
 
-
     while (exit != 1) {
         printf("Please select what you want to do by entering the menu points digit:\n  1) Generate a Room\n  2) Load a room\n  3) Save Room to file\n  4) Add Students to a Room \n  5) Mark a Student as Infected\n  6) Get direct neighbours for a Room\n  7) Get indirect neigbours for a room  ");
         input = fgetc(stdin) - 48;
@@ -28,7 +27,7 @@ int main(int argc, char *argv[]) {
                     menu_1generateRoom(&rows, &cols, classroom, roomname, argv);
                     break;
                 case 2:
-                    menu_2saveRoom(roomfile, roompath, classroom, argv);
+                    loadRoom_fromCSV(&classroom, &rows, &cols, get_Filepath(argv));
                     break;
                 case 3:
                     printf("No really just why default");
@@ -45,12 +44,25 @@ int main(int argc, char *argv[]) {
                 case 7:
                     getIndirectNeighbours(classroom, rows, cols);
                     break;
-
-
                 default:
-                    printf("No really just why default");
+                    printf("Invalid input. Please try again.\n");
             }
+        } else {
+            printf("Invalid input. Please try again.\n");
         }
-        return 0;
+        // Add an option to exit the program
+        printf("Press 0 to exit the program: ");
+        int exitInput = fgetc(stdin) - 48;
+        if (exitInput == 0) {
+            exit = 1;
+        }
     }
+    return 0;
 }
+
+
+
+
+
+
+

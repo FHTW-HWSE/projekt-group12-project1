@@ -144,6 +144,9 @@ struct seat **generateClassroom(int rows, int cols, char *roomname) {
 
 // Menu for: Generate Room, uses generateClassroom function
 
+void menu_2loadRoom(int *pInt, int *pInt1, struct seat **pSeat, char *roomname, char *roompath, FILE *pIobuf,
+                    char **pString);
+
 void base_menu(int input, int cols, int rows, struct seat **classroom, char roomname[10], char roompath[250], FILE *roomfile, char *argv[]){
     input = fgetc(stdin)-48;
     printf("Please select what you want to do by entering the menu points digit:\n  1) Generate a Room\n  2) Load a room\n  3) Save Room to file\n  4) Add Students to a Room \n  5) Mark a Student as Infected\n  6) Get direct neighbours of a Room\n  7) Get indirect neigbours of a room  ");
@@ -154,13 +157,21 @@ void base_menu(int input, int cols, int rows, struct seat **classroom, char room
                 menu_1generateRoom(&rows, &cols, classroom, roomname, argv);
                 break;
             case 2:
-                menu_2saveRoom(roomfile, roompath, classroom, argv);
+                menu_2loadRoom(&rows, &cols, classroom, roomname, roompath, roomfile, argv);
                 break;
             default:
                 printf("No really just why default");
         }
     }
 }
+
+void menu_2loadRoom(int *pInt, int *pInt1, struct seat **pSeat, char *roomname, char *roompath, FILE *pIobuf,
+                    char **pString) {
+
+}
+
+
+
 
 void menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[MAX_ROOMNAME_LENGTH], char *argv[]) {
     printf("Please enter the Name of your room:");
@@ -181,10 +192,64 @@ void menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char room
     classroom = generateClassroom(*rows, *cols, roomname);
     saveRoom_toCSV(classroom, *rows, *cols);
 }
+// Function to save the classroom to a CSV file
+void loadRoom_fromCSV(struct seat ***classroom, int *rows, int *cols, char *csv_path) {
+    FILE *csv = fopen(csv_path, "r");
+    if (csv == NULL) {
+        printf("Failed to open the file.\n");
+        return;
+    }
+
+    // Read the dimensions of the room from the first line of the CSV
+    fscanf(csv, "%d,%d\n", rows, cols);
+
+    // Allocate memory for the 2D array of seats
+    *classroom = (struct seat **)calloc(*rows, sizeof(struct seat *));
+    for (int i = 0; i < *rows; i++) {
+        (*classroom)[i] = (struct seat *)calloc(*cols, sizeof(struct seat));
+    }
+
+    // Read the seat data from the CSV and populate the classroom
+    for (int i = 0; i < *rows; i++) {
+        for (int j = 0; j < *cols; j++) {
+            int MAX_SEAT_DATA_LENGTH;
+            char seatData[MAX_SEAT_DATA_LENGTH];
+            fscanf(csv, "%[^,\n]", seatData);
+            fgetc(csv);  // Consume the comma or newline character
+
+            // Parse the seat data and assign it to the corresponding seat in the classroom
+            if (strlen(seatData) > 0) {
+                sscanf(seatData, "%s %d %d %d", (*classroom)[i][j].ID, &(*classroom)[i][j].infected,
+                       &(*classroom)[i][j].directNeighbour, &(*classroom)[i][j].indirectNeighbour);
+            }
+        }
+    }
+
+    fclose(csv);
+}
+
+
+// i need a get_Filepath function - ITS WORKING
+char* get_Filepath(){
+    char roomname[MAX_ROOMNAME_LENGTH];
+    char* filepath = (char*)calloc(MAX_FILEPATH_LENGTH, sizeof(char));
+
+    printf("Please enter the name of the room you want to load: ");
+    fflush(stdin);
+    fgets(roomname, MAX_ROOMNAME_LENGTH, stdin);
+
+    // Remove trailing newline character
+    if (roomname[strlen(roomname) - 1] == '\n')
+        roomname[strlen(roomname) - 1] = '\0';
+
+    snprintf(filepath, MAX_FILEPATH_LENGTH, "./%s.csv", roomname);
+
+    return filepath;
+}
 
 
 // Menu for: Save Room, uses get_filepath, saveRoom_toCSV
-void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom, char *argv[0]) {
+/*void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom, char *argv[0]) {
     roompath = get_Filepath(argv);
     roomfile = fopen(roompath, "r+");
     if (classroom != NULL) {
@@ -200,8 +265,10 @@ void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom,
 
     }
 }
+*/
 
-char *get_Filepath(char *argv[]) {
+
+/*char *get_Filepath(char *argv[]) {
     char roomname[MAX_ROOMNAME_LENGTH];
     char *filepath = calloc(MAX_FILEPATH_LENGTH, sizeof(char));
     int i = 0;
@@ -220,6 +287,7 @@ char *get_Filepath(char *argv[]) {
     strcat(filepath, roomname);
     return filepath;
 }
+ */
 
 void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
     if (classroom == NULL || classroom[0] == NULL) {
