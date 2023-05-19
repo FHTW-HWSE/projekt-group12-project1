@@ -19,7 +19,15 @@ int main(int argc, char *argv[]) {
     setbuf(stdout, NULL);
 
     while (exit != 1) {
-        printf("Please select what you want to do by entering the menu points digit:\n  1) Generate a Room\n  2) Load a room\n  3) Save Room to file\n  4) Add Students to a Room \n  5) Mark a Student as Infected\n  6) Get direct neighbours for a Room\n  7) Get indirect neigbours for a room  ");
+        printf("Please select what you want to do by entering the menu points digit:\n"
+               "  1) Generate a Room\n"
+               "  2) Load a room\n"
+               "  3) Save Room to file\n"
+               "  4) Add Students to a Room\n"
+               "  5) Mark a Student as Infected\n"
+               "  6) Get direct neighbours for a Room\n"
+               "  7) Get indirect neigbours for a room\n");
+
         input = fgetc(stdin) - 48;
         if (input > 0 && input < 10) {
             switch (input) {
@@ -33,16 +41,32 @@ int main(int argc, char *argv[]) {
                     printf("No really just why default");
                     break;
                 case 4:
-                    addStudentsToRoom(classroom, rows, cols);
+                    if (classroom != NULL) {
+                        addStudentsToRoom(classroom, rows, cols);
+                    } else {
+                        printf("Please generate or load a room first.\n");
+                    }
                     break;
                 case 5:
-                    markStudentAsInfected(classroom, rows, cols);
+                    if (classroom != NULL) {
+                        markStudentAsInfected(classroom, rows, cols);
+                    } else {
+                        printf("Please generate or load a room first.\n");
+                    }
                     break;
                 case 6:
-                    getDirectNeighbours(classroom, rows, cols);
+                    if (classroom != NULL) {
+                        getDirectNeighbours(classroom, rows, cols);
+                    } else {
+                        printf("Please generate or load a room first.\n");
+                    }
                     break;
                 case 7:
-                    getIndirectNeighbours(classroom, rows, cols);
+                    if (classroom != NULL) {
+                        getIndirectNeighbours(classroom, rows, cols);
+                    } else {
+                        printf("Please generate or load a room first.\n");
+                    }
                     break;
                 default:
                     printf("Invalid input. Please try again.\n");
@@ -50,11 +74,15 @@ int main(int argc, char *argv[]) {
         } else {
             printf("Invalid input. Please try again.\n");
         }
+
         // Add an option to exit the program
         printf("Press 0 to exit the program: ");
         int exitInput = fgetc(stdin) - 48;
         if (exitInput == 0) {
             exit = 1;
+        }
+        // Consume any remaining characters in the input buffer
+        while (getchar() != '\n') {
         }
     }
     return 0;
