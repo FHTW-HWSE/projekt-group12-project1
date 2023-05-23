@@ -323,6 +323,7 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
         perror("getcwd() error");
     }
 
+    /*
     const char *backup_suffix = "_bak";
     // Create a buffer to store the new filename
     char new_filename[FILENAME_MAX];
@@ -334,6 +335,8 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
     } else {
         printf("Failed to rename file '%s'.\n", csv_path);
     }
+    */
+
     FILE *csv = fopen(csv_path, "w");
     if (csv == NULL) {
         printf("Failed to open the file.\n");
