@@ -1,7 +1,7 @@
 //
 // Created by matze on 4/25/2023.
 //
-
+#include <unistd.h>
 #include "functions.h"
 
 // Function to add a student to a room
@@ -315,6 +315,25 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
     // Create the csv_path by appending ".csv" to the room name
     snprintf(csv_path, sizeof(csv_path), "%s.csv", roomname);
     printf("\nSaving room to %s\n", csv_path);
+
+    char cwd[PATH_MAX]; // Buffer to store the current working directory
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        printf("Current working directory: %s\n", cwd);
+    } else {
+        perror("getcwd() error");
+    }
+
+    const char *backup_suffix = "_bak";
+    // Create a buffer to store the new filename
+    char new_filename[FILENAME_MAX];
+    snprintf(new_filename, sizeof(new_filename), "%s%s", csv_path, backup_suffix);
+
+    if (rename(csv_path, new_filename) == 0) {
+        printf("File '%s' renamed to '%s' successfully.\n", csv_path, new_filename);
+
+    } else {
+        printf("Failed to rename file '%s'.\n", csv_path);
+    }
     FILE *csv = fopen(csv_path, "w");
     if (csv == NULL) {
         printf("Failed to open the file.\n");
@@ -335,6 +354,7 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
         }
         fprintf(csv, "\n");
     }
+    printf("\nRoom saved successfully.\n");
     fclose(csv);
 }
 
