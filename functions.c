@@ -18,6 +18,7 @@ void addStudentsToRoom(struct seat **classroom, int rows, int cols) {
     fflush(stdin);
     col = fgetc(stdin) - 48;
     strcpy(classroom[row][col].ID, ID);
+    saveRoom_toCSV(classroom, rows, cols);
 }
 
 // Function to mark a student as infected
@@ -200,6 +201,12 @@ void loadRoom_fromCSV(struct seat ***classroom, int *rows, int *cols, char *csv_
         return;
     }
 
+    //cat the first 2 symbols of the csv_path then cut the last 4 symbols of the csv_path to get the roomname
+    char *roomname = (char *)calloc(strlen(csv_path) - 2, sizeof(char));
+    strncpy(roomname, csv_path + 2, strlen(csv_path) - 6);
+
+
+
     // Read the dimensions of the room from the first line of the CSV
     fscanf(csv, "%d,%d\n", rows, cols);
 
@@ -208,6 +215,11 @@ void loadRoom_fromCSV(struct seat ***classroom, int *rows, int *cols, char *csv_
     for (int i = 0; i < *rows; i++) {
         (*classroom)[i] = (struct seat *)calloc(*cols, sizeof(struct seat));
     }
+
+    for (int i = 0; i < strlen(roomname); i++) {
+        (*classroom)[0][0].roomname[i] = roomname[i];
+    }
+    free(roomname);
 
     // Read the seat data from the CSV and populate the classroom
     for (int i = 0; i < *rows; i++) {
