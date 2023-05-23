@@ -219,6 +219,7 @@ void loadRoom_fromCSV(struct seat ***classroom, int *rows, int *cols, char *csv_
     for (int i = 0; i < strlen(roomname); i++) {
         (*classroom)[0][0].roomname[i] = roomname[i];
     }
+    (*classroom)[0][0].roomname[strlen(roomname)] = '\0';
     free(roomname);
 
     // Read the seat data from the CSV and populate the classroom
@@ -313,7 +314,7 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
 
     // Create the csv_path by appending ".csv" to the room name
     snprintf(csv_path, sizeof(csv_path), "%s.csv", roomname);
-
+    printf("\nSaving room to %s\n", csv_path);
     FILE *csv = fopen(csv_path, "w");
     if (csv == NULL) {
         printf("Failed to open the file.\n");
