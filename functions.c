@@ -20,6 +20,41 @@ void addStudentsToRoom(struct seat **classroom, int rows, int cols) {
     strcpy(classroom[row][col].ID, ID);
     saveRoom_toCSV(classroom, rows, cols);
 }
+//add student to room
+
+void menu_4addStudentsToRoom(struct seat **classroom, int rows, int cols) {
+    int row, col;
+    char ID[10];
+    printf("Please enter the ID of the student you want to add: ");
+    fflush(stdin);
+    fgets(ID, 10, stdin);
+    printf("Please enter the row of the seat you want to add the student to: ");
+    fflush(stdin);
+    scanf("%d", &row);
+    printf("Please enter the column of the seat you want to add the student to: ");
+    fflush(stdin);
+    scanf("%d", &col);
+
+    // Check if the seat coordinates are valid
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+        printf("Invalid seat coordinates.\n");
+        return;
+    }
+
+    // Check if the seat is already occupied
+    if (classroom[row][col].ID[0] != '\0') {
+        printf("The seat is already occupied.\n");
+        return;
+    }
+
+    strcpy(classroom[row][col].ID, ID);
+    saveRoom_toCSV(classroom, rows, cols);
+}
+
+
+
+
+
 
 // Function to mark a student as infected
 void markStudentAsInfected(struct seat **classroom, int rows, int cols) {
@@ -261,47 +296,6 @@ char* get_Filepath(){
 }
 
 
-// Menu for: Save Room, uses get_filepath, saveRoom_toCSV
-/*void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom, char *argv[0]) {
-    roompath = get_Filepath(argv);
-    roomfile = fopen(roompath, "r+");
-    if (classroom != NULL) {
-        printf("You have a room. It has the name '%s'. Do you want to save it? Y/N", classroom[0][0].roomname);
-        char answer;
-        if (toupper(answer = fgetc(stdin)) == 'Y') {
-            char *filepath = get_Filepath(argv);
-            //saveRoom_toCSV(classroom, filepath);
-        }
-    } else {
-        printf("You dont have a Room loaded -> generate one first, returning back to main menu");
-
-
-    }
-}
-*/
-
-
-/*char *get_Filepath(char *argv[]) {
-    char roomname[MAX_ROOMNAME_LENGTH];
-    char *filepath = calloc(MAX_FILEPATH_LENGTH, sizeof(char));
-    int i = 0;
-    printf("Please type in your desired Roomname and hit enter:");
-    fflush(stdin);
-    fgets(roomname, 18, stdin);
-    while (argv[0][i] != '\0') {
-        i++;
-    }
-    while (argv[0][i] != '/' || argv[0][i] != '\\') {
-        i--;
-    }
-    for (int j = 0; j <= i; j++) {
-        filepath[j] = argv[0][j];
-    }
-    strcat(filepath, roomname);
-    return filepath;
-}
- */
-
 void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
     if (classroom == NULL || classroom[0] == NULL) {
         printf("Invalid classroom data.\n");
@@ -323,19 +317,7 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
         perror("getcwd() error");
     }
 
-    /*
-    const char *backup_suffix = "_bak";
-    // Create a buffer to store the new filename
-    char new_filename[FILENAME_MAX];
-    snprintf(new_filename, sizeof(new_filename), "%s%s", csv_path, backup_suffix);
 
-    if (rename(csv_path, new_filename) == 0) {
-        printf("File '%s' renamed to '%s' successfully.\n", csv_path, new_filename);
-
-    } else {
-        printf("Failed to rename file '%s'.\n", csv_path);
-    }
-    */
 
     FILE *csv = fopen(csv_path, "w");
     if (csv == NULL) {
@@ -351,8 +333,10 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
                 fprintf(csv, ",");
             }
             if (classroom[i][j].ID[0] != '\0') {
-                fprintf(csv, "%s %d %d %d", classroom[i][j].ID, classroom[i][j].infected,
+                fprintf(csv, "%s", classroom[i][j].ID, classroom[i][j].infected,
                         classroom[i][j].directNeighbour, classroom[i][j].indirectNeighbour);
+            } else {
+                fprintf(csv, "X"); // Print "X" for empty seats
             }
         }
         fprintf(csv, "\n");

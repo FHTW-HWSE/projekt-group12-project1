@@ -41,11 +41,13 @@ int main(int argc, char *argv[]) {
                     printf("No really just why default");
                     break;
                 case 4:
+                    //add student to room menu_4addStudentsToRoom
                     if (classroom != NULL) {
                         addStudentsToRoom(classroom, rows, cols);
                     } else {
                         printf("Please generate or load a room first.\n");
                     }
+
                     break;
                 case 5:
                     if (classroom != NULL) {

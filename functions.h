@@ -24,15 +24,17 @@ struct seat {
     int indirectNeighbour;
     char ID[10];                        // 10 is suboptimal, but i cant use a preprocessor constant because of flexible data type
     char roomname[MAX_FILEPATH_LENGTH];
-
+    int grade;
+    int assignment1;
+    int assignment2;
 };
 
 struct seat **generateClassroom(int rows, int cols, char *roomname);
 void base_menu(int input, int cols, int rows, struct seat **classroom, char roomname[10], char roompath[250], FILE *roomfile, char *argv[]);
-//void saveRoom_toCSV(struct seat **classroom, char *csv_path);
+
 void saveRoom_toCSV(struct seat **classroom, int rows, int cols);
 void menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[10], char *argv[]); // Generate Room
-//void menu_2saveRoom(FILE *roomfile, char roompath[250], struct seat **classroom, char *argv[0]); // Load Room
+
 void loadRoom_fromCSV(struct seat ***classroom, int *rows, int *cols, char *csv_path);
 
 
@@ -49,5 +51,7 @@ void getDirectNeighbours(struct seat **classroom, int rows, int cols);
 //get indirect neighbours of a room
 void getIndirectNeighbours(struct seat **classroom, int rows, int cols);
 
+//add student to room
+void addStudentsToRoom(struct seat **classroom, int rows, int cols);
 
 #endif //PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
