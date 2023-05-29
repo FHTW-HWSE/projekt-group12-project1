@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
         if (input > 0 && input < 10) {
             switch (input) {
                 case 1:
-                    menu_1generateRoom(&rows, &cols, classroom, roomname, argv);
+                    classroom = menu_1generateRoom(&rows, &cols, classroom, roomname, argv);
                     break;
                 case 2:
                     loadRoom_fromCSV(&classroom, &rows, &cols, get_Filepath(argv));

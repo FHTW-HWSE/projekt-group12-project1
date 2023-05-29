@@ -29,11 +29,14 @@ struct seat {
     int assignment2;
 };
 
-struct seat **generateClassroom(int rows, int cols, char *roomname);
 void base_menu(int input, int cols, int rows, struct seat **classroom, char roomname[10], char roompath[250], FILE *roomfile, char *argv[]);
 
+// Generate Room
+struct seat **menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[10], char *argv[]);
+struct seat **generateClassroom(int rows, int cols, char *roomname);
+
 void saveRoom_toCSV(struct seat **classroom, int rows, int cols);
-void menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[10], char *argv[]); // Generate Room
+
 
 void loadRoom_fromCSV(struct seat ***classroom, int *rows, int *cols, char *csv_path);
 

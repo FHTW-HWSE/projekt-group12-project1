@@ -209,7 +209,7 @@ void menu_2loadRoom(int *pInt, int *pInt1, struct seat **pSeat, char *roomname, 
 
 
 
-void menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[MAX_ROOMNAME_LENGTH], char *argv[]) {
+struct seat **menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char roomname[MAX_ROOMNAME_LENGTH], char *argv[]) {
     printf("Please enter the Name of your room:");
     fflush(stdin);
     fgets(roomname, MAX_ROOMNAME_LENGTH, stdin);
@@ -225,8 +225,8 @@ void menu_1generateRoom(int *rows, int *cols, struct seat **classroom, char room
     fflush(stdin);
     *cols = fgetc(stdin)-48;
     printf("You entered %d rows and %d cols", *rows, *cols);
-    classroom = generateClassroom(*rows, *cols, roomname);
-    saveRoom_toCSV(classroom, *rows, *cols);
+    return generateClassroom(*rows, *cols, roomname);
+    //saveRoom_toCSV(classroom, *rows, *cols);
 }
 // Function to save the classroom to a CSV file
 void loadRoom_fromCSV(struct seat ***classroom, int *rows, int *cols, char *csv_path) {
