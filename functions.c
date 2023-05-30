@@ -305,7 +305,7 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
     // Assuming roomname is a null-terminated string in the struct seat
     char *roomname = classroom[0][0].roomname;
     char csv_path[MAX_ROOMNAME_LENGTH + 5]; // 4 for ".csv" extension and 1 for null-terminator
-
+    char lineholder[MAX_CSV_LINE_LENGTH];
     // Create the csv_path by appending ".csv" to the room name
     snprintf(csv_path, sizeof(csv_path), "%s.csv", roomname);
     printf("\nSaving room to %s\n", csv_path);
@@ -333,8 +333,9 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
                 fprintf(csv, ",");
             }
             if (classroom[i][j].ID[0] != '\0') {
-                fprintf(csv, "%s", classroom[i][j].ID, classroom[i][j].infected,
+                sprintf(lineholder, "%s %d %d %d",classroom[i][j].ID, classroom[i][j].infected,
                         classroom[i][j].directNeighbour, classroom[i][j].indirectNeighbour);
+                fprintf(csv, "%s", lineholder);
             } else {
                 fprintf(csv, "X"); // Print "X" for empty seats
             }

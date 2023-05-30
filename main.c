@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
                "  6) Get direct neighbours for a Room\n"
                "  7) Get indirect neigbours for a room\n");
 
+        fflush(stdin);
         input = fgetc(stdin) - 48;
         if (input > 0 && input < 10) {
             switch (input) {
@@ -79,6 +80,7 @@ int main(int argc, char *argv[]) {
 
         // Add an option to exit the program
         printf("Press 0 to exit the program: ");
+        fflush(stdin);
         int exitInput = fgetc(stdin) - 48;
         if (exitInput == 0) {
             exit = 1;
