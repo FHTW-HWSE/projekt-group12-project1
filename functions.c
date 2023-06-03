@@ -220,10 +220,10 @@ struct seat **menu_1generateRoom(int *rows, int *cols, struct seat **classroom, 
     fflush(stdin);
     printf("Please enter the number of your rows and hit enter:");
     fflush(stdin);
-    *rows = fgetc(stdin)-48;
+    *rows = getMultidigit();
     printf("Please enter the number of your cols and hit enter:");
     fflush(stdin);
-    *cols = fgetc(stdin)-48;
+    *cols = getMultidigit();
     printf("You entered %d rows and %d cols", *rows, *cols);
     return generateClassroom(*rows, *cols, roomname);
     //saveRoom_toCSV(classroom, *rows, *cols);
@@ -408,7 +408,37 @@ void readRoom_fromCSV(struct seat **classroom, char *csv_path) {
         }
 
     }
+}
 
+int getMultidigit() {
+    char input[100];
+    int number;
+    bool isValid = false;
 
+    while (!isValid) {
+        //printf("Enter a positive multidigit number: ");
+        fgets(input, sizeof(input), stdin);
 
+        // Check if input contains any non-digit characters
+        bool containsNonDigit = false;
+        for (int i = 0; input[i] != '\n'; i++) {
+            if (!isdigit(input[i])) {
+                containsNonDigit = true;
+                break;
+            }
+        }
+
+        if (containsNonDigit) {
+            printf("Invalid input. Please enter a positive number.\n");
+        } else {
+            number = atoi(input);
+            if (number < 0) {
+                printf("Invalid input. Please enter a non-negative number.\n");
+            } else {
+                isValid = true;
+            }
+        }
+    }
+
+    return number;
 }

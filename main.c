@@ -12,6 +12,7 @@
 int main(int argc, char *argv[]) {
     int rows, cols;
     int input = 0, exit = 0;
+
     char roomname[10];
     char roompath[250];
     FILE *roomfile;
@@ -20,6 +21,7 @@ int main(int argc, char *argv[]) {
 
     while (exit != 1) {
         printf("Please select what you want to do by entering the menu points digit:\n"
+               "  0) Exit the program\n"
                "  1) Generate a Room\n"
                "  2) Load a room\n"
                "  3) Save Room to file\n"
@@ -29,9 +31,12 @@ int main(int argc, char *argv[]) {
                "  7) Get indirect neigbours for a room\n");
 
         fflush(stdin);
-        input = fgetc(stdin) - 48;
-        if (input > 0 && input < 10) {
+        input = getMultidigit();
+        if (input >= 0 && input < 10) {
             switch (input) {
+                case 0:
+                    exit = 1;
+                    break;
                 case 1:
                     classroom = menu_1generateRoom(&rows, &cols, classroom, roomname, argv);
                     break;
@@ -39,7 +44,7 @@ int main(int argc, char *argv[]) {
                     loadRoom_fromCSV(&classroom, &rows, &cols, get_Filepath(argv));
                     break;
                 case 3:
-                    printf("No really just why default");
+                    //saveRoom_toCSV(&classroom,rows, cols);
                     break;
                 case 4:
                     //add student to room menu_4addStudentsToRoom
@@ -48,7 +53,6 @@ int main(int argc, char *argv[]) {
                     } else {
                         printf("Please generate or load a room first.\n");
                     }
-
                     break;
                 case 5:
                     if (classroom != NULL) {
@@ -76,17 +80,6 @@ int main(int argc, char *argv[]) {
             }
         } else {
             printf("Invalid input. Please try again.\n");
-        }
-
-        // Add an option to exit the program
-        printf("Press 0 to exit the program: ");
-        fflush(stdin);
-        int exitInput = fgetc(stdin) - 48;
-        if (exitInput == 0) {
-            exit = 1;
-        }
-        // Consume any remaining characters in the input buffer
-        while (getchar() != '\n') {
         }
     }
     return 0;

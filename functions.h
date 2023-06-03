@@ -168,6 +168,13 @@ void getDirectNeighbours(struct seat **classroom, int rows, int cols);
  */
 void getIndirectNeighbours(struct seat **classroom, int rows, int cols);
 
-
+/**
+ * @brief Function to get an integer from user input.
+ *  This function prompts the user to enter a positive (multi)digit number.
+ *  It reads the input and performs input validation to ensure that the input contains only digits
+ *  and the resulting number is non-negative.
+ * @return The valid non-negative number entered by the user.
+ */
+int getMultidigit();
 
 #endif //PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
