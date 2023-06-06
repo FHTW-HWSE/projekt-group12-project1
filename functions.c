@@ -225,10 +225,11 @@ struct seat **menu_1generateRoom(int *rows, int *cols, struct seat **classroom, 
     fflush(stdin);
     *cols = getMultidigit();
     printf("You entered %d rows and %d cols", *rows, *cols);
+
+    saveRoom_toCSV(classroom, *rows, *cols);
     return generateClassroom(*rows, *cols, roomname);
-    //saveRoom_toCSV(classroom, *rows, *cols);
 }
-// Function to save the classroom to a CSV file
+
 void loadRoom_fromCSV(struct seat ***classroom, int *rows, int *cols, char *csv_path) {
     FILE *csv = fopen(csv_path, "r");
     if (csv == NULL) {
