@@ -22,12 +22,12 @@ int main(int argc, char *argv[]) {
     while (exit != 1) {
         printf("Please select what you want to do by entering the menu points digit:\n"
                "  0) Exit the program\n"
-               "  1) Generate a Room\n"
+               "  1) Generate a room\n"
                "  2) Load a room\n"
-               "  3) Save Room to file\n"
-               "  4) Add Students to a Room\n"
-               "  5) Mark a Student as Infected\n"
-               "  6) Get direct neighbours for a Room\n"
+               "  3) Save room to file\n"
+               "  4) Add students to a room\n"
+               "  5) Mark a student as infected\n"
+               "  6) Get direct neighbours for a room\n"
                "  7) Get indirect neigbours for a room\n");
 
         fflush(stdin);
