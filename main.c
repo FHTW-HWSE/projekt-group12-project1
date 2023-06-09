@@ -44,10 +44,9 @@ int main(int argc, char *argv[]) {
                     loadRoom_fromCSV(&classroom, &rows, &cols, get_Filepath(argv));
                     break;
                 case 3:
-                    //saveRoom_toCSV(&classroom,rows, cols);
+                    saveRoom_toCSV(classroom,rows, cols);
                     break;
                 case 4:
-                    //add student to room menu_4addStudentsToRoom
                     if (classroom != NULL) {
                         addStudentsToRoom(classroom, rows, cols);
                     } else {
