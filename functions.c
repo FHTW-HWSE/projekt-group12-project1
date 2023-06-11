@@ -216,101 +216,98 @@ void menu_4addStudentsToRoom(struct seat **classroom, int rows, int cols) {
 // Function to mark a student as infected
 void markStudentAsInfected(struct seat **classroom, int rows, int cols) {
     int row, col;
-    printf("Enter the seat coordinates to mark a student as infected (row col): ");
-    scanf("%d %d", &row, &col);
-    // Check if the seat is occupied
-    if (classroom[row][col].ID[0] == '\0') {
-        printf("The seat is not occupied.\n");
-        return;
-    }
+    printf("Please enter the row of the seat with the infected student:");
+    fflush(stdin);
+    row = getMultidigit();
+    printf("Please enter the column of the seat with the infected student:");
+    fflush(stdin);
+    col = getMultidigit();
+
     // Check if the seat coordinates are valid
-    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+    if (row < 1 || row > rows || col < 1 || col > cols) {
         printf("Invalid seat coordinates.\n");
         return;
     }
+
     // Mark the student as infected
-    classroom[row][col].infected = 1;
+    classroom[row - 1][col - 1].infected = 1;
+
+    printf("Student in seat %d-%d marked as infected.\n", row, col);
 }
 
 // Function to get the direct neighbours of a student
 void getDirectNeighbours(struct seat **classroom, int rows, int cols) {
     int row, col;
-    printf("Enter the seat coordinates to get the direct neighbours (row col): ");
-    scanf("%d %d", &row, &col);
-    // Check if the seat is occupied
-    if (classroom[row][col].ID[0] == '\0') {
-        printf("The seat is not occupied.\n");
-        return;
-    }
+    printf("Please enter the row of the seat to get direct neighbors:");
+    fflush(stdin);
+    row = getMultidigit();
+    printf("Please enter the column of the seat to get direct neighbors:");
+    fflush(stdin);
+    col = getMultidigit();
+
     // Check if the seat coordinates are valid
-    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+    if (row < 1 || row > rows || col < 1 || col > cols) {
         printf("Invalid seat coordinates.\n");
         return;
     }
+
     // Check if the student is infected
-    if (classroom[row][col].infected == -1) {
-        printf("The student is not infected.\n");
+    if (classroom[row - 1][col - 1].infected != 1) {
+        printf("The student in seat %d-%d is not infected.\n", row, col);
         return;
     }
-    // Check if the student has direct neighbours
-    if (classroom[row][col].directNeighbour == -1) {
-        printf("The student has no direct neighbours.\n");
-        return;
+
+    // Find and print the direct neighbors
+    printf("Direct neighbors of student in seat %d-%d:\n", row, col);
+    if (row - 2 >= 0) {
+        printf("%s\n", classroom[row - 2][col - 1].ID);
     }
-    // Print the direct neighbours
-    printf("The direct neighbours of the student are:\n");
-    if (row > 0 && classroom[row - 1][col].ID[0] != '\0') {
-        printf("  %s\n", classroom[row - 1][col].ID);
+    if (row < rows) {
+        printf("%s\n", classroom[row][col - 1].ID);
     }
-    if (row < rows - 1 && classroom[row + 1][col].ID[0] != '\0') {
-        printf("  %s\n", classroom[row + 1][col].ID);
+    if (col - 2 >= 0) {
+        printf("%s\n", classroom[row - 1][col - 2].ID);
     }
-    if (col > 0 && classroom[row][col - 1].ID[0] != '\0') {
-        printf("  %s\n", classroom[row][col - 1].ID);
-    }
-    if (col < cols - 1 && classroom[row][col + 1].ID[0] != '\0') {
-        printf("  %s\n", classroom[row][col + 1].ID);
+    if (col < cols) {
+        printf("%s\n", classroom[row - 1][col].ID);
     }
 }
 
 //get indirect neighbours
 void getIndirectNeighbours(struct seat **classroom, int rows, int cols) {
     int row, col;
-    printf("Enter the seat coordinates to get the indirect neighbours (row col): ");
-    scanf("%d %d", &row, &col);
-    // Check if the seat is occupied
-    if (classroom[row][col].ID[0] == '\0') {
-        printf("The seat is not occupied.\n");
-        return;
-    }
+    printf("Please enter the row of the seat to get indirect neighbors:");
+    fflush(stdin);
+    row = getMultidigit();
+    printf("Please enter the column of the seat to get indirect neighbors:");
+    fflush(stdin);
+    col = getMultidigit();
+
     // Check if the seat coordinates are valid
-    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+    if (row < 1 || row > rows || col < 1 || col > cols) {
         printf("Invalid seat coordinates.\n");
         return;
     }
+
     // Check if the student is infected
-    if (classroom[row][col].infected == -1) {
-        printf("The student is not infected.\n");
+    if (classroom[row - 1][col - 1].infected != 1) {
+        printf("The student in seat %d-%d is not infected.\n", row, col);
         return;
     }
-    // Check if the student has indirect neighbours
-    if (classroom[row][col].indirectNeighbour == -1) {
-        printf("The student has no indirect neighbours.\n");
-        return;
+
+    // Find and print the indirect neighbors
+    printf("Indirect neighbors of student in seat %d-%d:\n", row, col);
+    if (row - 2 >= 0 && col - 2 >= 0) {
+        printf("%s\n", classroom[row - 2][col - 2].ID);
     }
-    // Print the indirect neighbours
-    printf("The indirect neighbours of the student are:\n");
-    if (row > 0 && col > 0 && classroom[row - 1][col - 1].ID[0] != '\0') {
-        printf("  %s\n", classroom[row - 1][col - 1].ID);
+    if (row - 2 >= 0 && col < cols) {
+        printf("%s\n", classroom[row - 2][col].ID);
     }
-    if (row > 0 && col < cols - 1 && classroom[row - 1][col + 1].ID[0] != '\0') {
-        printf("  %s\n", classroom[row - 1][col + 1].ID);
+    if (row < rows && col - 2 >= 0) {
+        printf("%s\n", classroom[row][col - 2].ID);
     }
-    if (row < rows - 1 && col > 0 && classroom[row + 1][col - 1].ID[0] != '\0') {
-        printf("  %s\n", classroom[row + 1][col - 1].ID);
-    }
-    if (row < rows - 1 && col < cols - 1 && classroom[row + 1][col + 1].ID[0] != '\0') {
-        printf("  %s\n", classroom[row + 1][col + 1].ID);
+    if (row < rows && col < cols) {
+        printf("%s\n", classroom[row][col].ID);
     }
 }
 
