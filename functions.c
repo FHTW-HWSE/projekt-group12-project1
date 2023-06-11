@@ -143,12 +143,14 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
 // Function to add a student to a room
 void addStudentsToRoom(struct seat **classroom, int rows, int cols) {
     int row, col, len;
-    char ID[10];
+    char studentID[10];
     printf("Please enter the ID of the student you want to add:");
     fflush(stdin);
-    fgets(ID, 10, stdin);
-    len = strlen(ID);
-    if(len>0 && ID[len-1] == '\n'){ID[len-1] = '\0';}
+    fgets(studentID, 10, stdin);
+    len = strlen(studentID);
+    if (len > 0 && studentID[len - 1] == '\n') {
+        studentID[len - 1] = '\0';
+    }
     printf("Please enter the row of the seat you want to add the student to:");
     fflush(stdin);
     row = getMultidigit();
@@ -157,18 +159,22 @@ void addStudentsToRoom(struct seat **classroom, int rows, int cols) {
     col = getMultidigit();
 
     // Check if the seat coordinates are valid
-    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+    if (row < 1 || row > rows || col < 1 || col > cols) {
         printf("Invalid seat coordinates.\n");
         return;
     }
 
     // Check if the seat is already occupied
-    if (classroom[row][col].ID[0] != '\0') {
+    if (classroom[row - 1][col - 1].ID[0] != 'X') {
         printf("The seat is already occupied.\n");
         return;
     }
 
-    strcpy(classroom[row][col].ID, ID);
+    // Update the classroom data structure
+    strcpy(classroom[row - 1][col - 1].ID, studentID);
+    printf("Student %s added to seat %d-%d.\n", studentID, row, col);
+
+    // Save the updated classroom to the CSV file
     saveRoom_toCSV(classroom, rows, cols);
 }
 //add student to room
