@@ -39,6 +39,7 @@ int main(int argc, char *argv[]) {
                     break;
                 case 1:
                     classroom = menu_1generateRoom(&rows, &cols, classroom, roomname, argv);
+                    saveRoom_toCSV(classroom, rows, cols);
                     break;
                 case 2:
                     loadRoom_fromCSV(&classroom, &rows, &cols, get_Filepath(argv));

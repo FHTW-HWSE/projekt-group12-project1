@@ -23,7 +23,6 @@ struct seat **menu_1generateRoom(int *rows, int *cols, struct seat **classroom, 
     *cols = getMultidigit();
     printf("You entered %d rows and %d colums\n\n", *rows, *cols);
 
-    //saveRoom_toCSV(classroom, *rows, *cols);
     return generateClassroom(*rows, *cols, roomname);
 }
 
@@ -208,32 +207,45 @@ void menu_4addStudentsToRoom(struct seat **classroom, int rows, int cols) {
     saveRoom_toCSV(classroom, rows, cols);
 }
 
-
-
-
-
-
 // Function to mark a student as infected
 void markStudentAsInfected(struct seat **classroom, int rows, int cols) {
-    int row, col;
-    printf("Please enter the row of the seat with the infected student:");
-    fflush(stdin);
-    row = getMultidigit();
-    printf("Please enter the column of the seat with the infected student:");
-    fflush(stdin);
-    col = getMultidigit();
+    char studentID[10];
+    printf("The students in the room are:\n");
 
-    // Check if the seat coordinates are valid
-    if (row < 1 || row > rows || col < 1 || col > cols) {
-        printf("Invalid seat coordinates.\n");
-        return;
+// Display all the students' IDs
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if(strcmp(classroom[i][j].ID, "X") != 0) {
+                printf("Student ID: %s, Seat: %d-%d\n", classroom[i][j].ID, i+1, j+1);
+            }
+        }
     }
 
-    // Mark the student as infected
-    classroom[row - 1][col - 1].infected = 1;
 
-    printf("Student in seat %d-%d marked as infected.\n", row, col);
+    printf("Please enter the ID of the student to mark as infected:");
+    fflush(stdin);
+    fgets(studentID, 10, stdin); // Assumes IDs are at most 9 characters, plus the null terminator
+
+    // Remove trailing newline character if it exists
+    if ((strlen(studentID) > 0) && (studentID[strlen (studentID) - 1] == '\n')) {
+        studentID[strlen (studentID) - 1] = '\0';
+    }
+
+    // Look for the student with the matching ID and mark them as infected
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (strcmp(classroom[i][j].ID, studentID) == 0) {
+                classroom[i][j].infected = 1;
+                printf("Student with ID %s in seat %d-%d marked as infected.\n", studentID, i+1, j+1);
+                saveRoom_toCSV(classroom, rows, cols);
+                return;
+            }
+        }
+    }
+
+    printf("Invalid student ID.\n");
 }
+
 
 // Function to get the direct neighbours of a student
 void getDirectNeighbours(struct seat **classroom, int rows, int cols) {
