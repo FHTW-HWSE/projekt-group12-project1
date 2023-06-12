@@ -1,6 +1,3 @@
-// Created by Emad on 18/04/2023.
-//
-
 #ifndef PROJEKT_GROUP12_PROJECT1_MAIN_H
 #define PROJEKT_GROUP12_PROJECT1_MAIN_H
 

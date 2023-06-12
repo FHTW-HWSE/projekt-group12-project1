@@ -1,6 +1,3 @@
-//
-// Created by matze on 4/25/2023.
-//
 #include <unistd.h>
 #include "functions.h"
 
@@ -207,12 +204,12 @@ void menu_4addStudentsToRoom(struct seat **classroom, int rows, int cols) {
     saveRoom_toCSV(classroom, rows, cols);
 }
 
-// Function to mark a student as infected
+//mark a student as infected
 void markStudentAsInfected(struct seat **classroom, int rows, int cols) {
     char studentID[10];
     printf("The students in the room are:\n");
 
-// Display all the students' IDs
+// Display all the students IDs
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             if(strcmp(classroom[i][j].ID, "X") != 0) {
@@ -322,15 +319,6 @@ void getIndirectNeighbours(struct seat **classroom, int rows, int cols) {
         printf("%s\n", classroom[row][col].ID);
     }
 }
-
-
-
-
-// Function to generate the classroom with the specified rows and columns
-
-
-// Menu for: Generate Room, uses generateClassroom function
-
 
 
 

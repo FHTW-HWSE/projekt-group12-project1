@@ -2,13 +2,6 @@
 #include "main.h"
 #include "functions.h"
 
-
-//need a function to make a classroom with the specified rows and columns and print it out
-//need a function to assign a seat to a student with the specified ID and print it out
-//need a function to get the direct neighbors of a student and print it out
-//generate a classroom with rows and columns and print it out with user input
-
-
 int main(int argc, char *argv[]) {
     int rows, cols;
     int input = 0, exit = 0;

@@ -1,7 +1,3 @@
-//
-// Created by matze on 4/25/2023.
-//
-
 #ifndef PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
 #define PROJEKT_GROUP12_PROJECT1_FUNCTIONS_H
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))

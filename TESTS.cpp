@@ -1,7 +1,3 @@
-//
-// Created by Raikhan Kushekova on 30/05/2023.
-//
-
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 #include "functions.h"
