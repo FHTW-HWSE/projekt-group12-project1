@@ -92,6 +92,15 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
         return;
     }
 
+    // Asking user for seating pattern
+    int pattern;
+    printf("Enter seating pattern (1 for every seat, 2 for every second seat, 4 for every fourth seat): ");
+    scanf("%d", &pattern);
+    if (pattern != 1 && pattern != 2 && pattern != 4) {
+        printf("Invalid seating pattern.\n");
+        return;
+    }
+
     // Assuming roomname is a null-terminated string in the struct seat
     char *roomname = classroom[0][0].roomname;
     char csv_path[MAX_ROOMNAME_LENGTH + 5]; // 4 for ".csv" extension and 1 for null-terminator
@@ -107,8 +116,6 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
         perror("getcwd() error");
     }
 
-
-
     FILE *csv = fopen(csv_path, "w");
     if (csv == NULL) {
         printf("Failed to open the file.\n");
@@ -122,12 +129,14 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
             if (j > 0) {
                 fprintf(csv, ",");
             }
-            if (classroom[i][j].ID[0] != '\0') {
+            if ((j+1) % pattern == 0 && classroom[i][j].ID[0] == '\0') {
+                fprintf(csv, "X"); // Print "X" for seats that can be taken
+            } else if (classroom[i][j].ID[0] != '\0') {
                 sprintf(lineholder, "%s %d %d %d",classroom[i][j].ID, classroom[i][j].infected,
                         classroom[i][j].directNeighbour, classroom[i][j].indirectNeighbour);
                 fprintf(csv, "%s", lineholder);
             } else {
-                fprintf(csv, "X"); // Print "X" for empty seats
+                fprintf(csv, "N"); // Print "N" for seats that can't be taken
             }
         }
         fprintf(csv, "\n");
@@ -135,6 +144,8 @@ void saveRoom_toCSV(struct seat **classroom, int rows, int cols) {
     printf("\nRoom saved successfully.\n");
     fclose(csv);
 }
+
+
 
 // Function to add a student to a room
 void addStudentsToRoom(struct seat **classroom, int rows, int cols) {
@@ -160,6 +171,12 @@ void addStudentsToRoom(struct seat **classroom, int rows, int cols) {
         return;
     }
 
+    // Check if the seat is not allowed to be taken
+    if (classroom[row - 1][col - 1].ID[0] == 'N') {
+        printf("The seat is not allowed to be taken.\n");
+        return;
+    }
+
     // Check if the seat is already occupied
     if (classroom[row - 1][col - 1].ID[0] != 'X') {
         printf("The seat is already occupied.\n");
@@ -173,6 +190,7 @@ void addStudentsToRoom(struct seat **classroom, int rows, int cols) {
     // Save the updated classroom to the CSV file
     saveRoom_toCSV(classroom, rows, cols);
 }
+
 //add student to room
 
 void menu_4addStudentsToRoom(struct seat **classroom, int rows, int cols) {
